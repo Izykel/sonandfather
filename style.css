@@ -1,0 +1,12 @@
+/* This file is intentionally minimal.
+	Tailwind's generated CSS will be written to ./dist/styles.css by the build step.
+	You can keep this file as a placeholder or remove it.
+*/
+
+/* If you want to keep a fallback, add rules here. */
+html,
+body {
+  height: 100vh;
+  width: auto;
+  background-color: #ffc121;
+}
