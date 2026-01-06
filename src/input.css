@@ -25,6 +25,11 @@
   @apply px-4 py-2 rounded font-semibold;
   outline: 1px solid white;
   outline-offset: 2px;
+  flex: 0 1 auto;
+}
+
+.rsp {
+  flex: 1 1 auto;
 }
 
 @layer base {
@@ -226,7 +231,6 @@
   .btn {
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
-    display: inline-flex;
     align-items: center;
     justify-content: center;
   }
@@ -286,4 +290,10 @@
     width: 100%;
     height: auto;
   }
+}
+
+.logo {
+  width: 35px;
+  height: 35px;
+  margin-right: 2px;
 }
