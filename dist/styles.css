@@ -757,6 +757,16 @@ html,
   padding: 0.5rem;
 }
 
+.px-2{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.py-2{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .text-2xl{
   font-size: 1.5rem;
   line-height: 2rem;
@@ -854,16 +864,9 @@ html,
   color: var(--color-white);
 }
 
-.btn{
-  border-radius: 0.25rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  font-weight: 600;
+.outline-btn {
   outline: 1px solid white;
   outline-offset: 2px;
-  flex: 0 1 auto;
 }
 
 .rsp {
@@ -958,6 +961,27 @@ html,
   font-style: normal;
 }
 
+@media (max-width: 376px) {
+  nav div p,
+  span {
+    font-size: 1.1rem;
+  }
+
+  nav button {
+    font-size: 12px;
+    padding: 8px 10px;
+    outline: 1px solid white;
+    outline-offset: 2px;
+    flex: 0 1 auto;
+    border-radius: 3px;
+  }
+
+  .logo {
+    height: 30px;
+    width: 30px;
+  }
+}
+
 @media (max-width: 640px) {
   body {
     padding: 0.5rem;
@@ -1040,10 +1064,10 @@ html,
   }
 
   .btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
     align-items: center;
     justify-content: center;
+    outline: 1px solid white;
+    outline-offset: 2px;
   }
 
   button.w-full,
@@ -1074,7 +1098,7 @@ html,
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 914px) {
   footer {
     padding: 0.75rem;
     height: auto;

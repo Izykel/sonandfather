@@ -21,11 +21,9 @@
   color: var(--color-white);
 }
 
-.btn {
-  @apply px-4 py-2 rounded font-semibold;
+.outline-btn {
   outline: 1px solid white;
   outline-offset: 2px;
-  flex: 0 1 auto;
 }
 
 .rsp {
@@ -147,6 +145,27 @@
   font-style: normal;
 }
 
+@media (max-width: 376px) {
+  nav div p,
+  span {
+    font-size: 1.1rem;
+  }
+
+  nav button {
+    font-size: 12px;
+    padding: 8px 10px;
+    outline: 1px solid white;
+    outline-offset: 2px;
+    flex: 0 1 auto;
+    border-radius: 3px;
+  }
+
+  .logo {
+    height: 30px;
+    width: 30px;
+  }
+}
+
 @media (max-width: 640px) {
   body {
     padding: 0.5rem;
@@ -229,10 +248,10 @@
   }
 
   .btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
     align-items: center;
     justify-content: center;
+    outline: 1px solid white;
+    outline-offset: 2px;
   }
 
   button.w-full,
@@ -264,7 +283,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 914px) {
   footer {
     padding: 0.75rem;
     height: auto;
