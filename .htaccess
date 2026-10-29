@@ -1,0 +1,39 @@
+# One canonical address: https://www.sonandfather.online/
+RewriteEngine On
+
+# http -> https and bare domain -> www, in a single 301
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^ https://www.sonandfather.online%{REQUEST_URI} [L,R=301]
+
+# /index.html -> /
+RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
+RewriteRule ^index\.html$ https://www.sonandfather.online/ [L,R=301]
+
+# Keep build/config files out of search results
+<FilesMatch "^(package(-lock)?\.json|tailwind\.config\.cjs|postcss\.config\.cjs|README.*\.md)$">
+  Require all denied
+</FilesMatch>
+
+# Make sure modern formats are served with the right type
+AddType image/avif .avif
+AddType image/webp .webp
+AddType font/woff2 .woff2
+
+# Browser caching
+<IfModule mod_headers.c>
+  # CSS and JS are linked with ?v=N, so a new version always gets a new URL
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.woff2$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(avif|webp|png|jpe?g|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  # Always check for a fresh page so updates show up immediately
+  <FilesMatch "\.html?$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

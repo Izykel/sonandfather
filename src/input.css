@@ -1,3 +1,37 @@
+/* Self-hosted fonts (Latin + Latin Extended, variable weight) */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url("../assets/fonts/bricolage-grotesque-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url("../assets/fonts/bricolage-grotesque-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("../assets/fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("../assets/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -29,12 +63,12 @@
   h3 {
     @apply font-display;
     font-optical-sizing: auto;
+  }
+  /* Balanced wrapping only on the large section headings: it costs extra layout passes */
+  h2 {
     text-wrap: balance;
   }
 
-  p {
-    text-wrap: pretty;
-  }
 
   ::selection {
     background: var(--color-ink);
@@ -93,6 +127,16 @@
   .btn-ghost:hover {
     @apply border-primary text-primary;
   }
+  /* WhatsApp green with ink text keeps AA contrast (about 9.6:1) */
+  .btn-wa {
+    @apply bg-[#25d366] text-ink;
+  }
+  .btn-wa:hover {
+    @apply bg-[#4be083];
+  }
+  .wa-icon {
+    @apply h-[22px] w-[22px] shrink-0 rounded-full ring-2 ring-white;
+  }
 
   @media (hover: hover) {
     .btn:hover {
@@ -137,6 +181,11 @@
   /* Eyebrow label ------------------------------------------------- */
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em];
+  }
+
+  /* Step number ------------------------------------------------- */
+  .step-num {
+    @apply grid h-10 w-10 place-items-center rounded-full bg-ink/[0.06] font-display text-base font-bold text-ink;
   }
 
   /* Bento tiles --------------------------------------------------- */
@@ -209,8 +258,11 @@
     @apply border-b-0;
   }
   .phone-row__num {
-    @apply font-display text-xl font-semibold tabular-nums tracking-tight sm:text-2xl;
+    @apply block font-display text-xl font-semibold tabular-nums tracking-tight sm:text-2xl;
     transition: transform 0.4s var(--ease-out), color 0.25s ease;
+  }
+  .phone-row__label {
+    @apply mt-1 flex items-center gap-1.5 text-sm text-white/70;
   }
   .phone-row__arrow {
     @apply grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/20 text-white;
@@ -231,6 +283,93 @@
     animation: spin 28s linear infinite;
   }
 
+  /* FAQ accordion (native details/summary, works without JS) ---- */
+  .faq-item {
+    @apply rounded-2xl bg-paper ring-1 ring-ink/[0.06];
+    transition: box-shadow 0.3s ease;
+  }
+  .faq-item[open] {
+    box-shadow: 0 18px 40px -24px rgba(20, 20, 20, 0.25);
+  }
+  .faq-item summary {
+    @apply flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-5 sm:px-6;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary h3 {
+    @apply font-display text-lg font-semibold tracking-tight sm:text-xl;
+  }
+  .faq-item p {
+    @apply px-5 pb-6 text-muted sm:px-6;
+  }
+  .faq-icon {
+    @apply grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink/[0.06] text-ink;
+    transition: transform 0.4s var(--ease-out), background-color 0.25s ease, color 0.25s ease;
+  }
+  .faq-item summary:hover .faq-icon {
+    @apply bg-primary;
+  }
+  .faq-item[open] .faq-icon {
+    @apply bg-ink text-primary;
+    transform: rotate(45deg);
+  }
+
+  /* Logo ---------------------------------------------------------- */
+  .logo {
+    @apply relative inline-block;
+  }
+  .logo img {
+    @apply absolute inset-0 h-full w-full;
+  }
+
+  /* Call-to-order icon rings when the card is hovered ------------ */
+  @media (hover: hover) {
+    .tile:hover .call-icon {
+      animation: ring 0.9s ease-in-out;
+    }
+  }
+
+  /* Footer -------------------------------------------------------- */
+  .footer-heading {
+    @apply font-sans text-xs font-semibold uppercase tracking-[0.16em] text-primary;
+  }
+  .footer-phone {
+    @apply block;
+  }
+  .footer-phone__num {
+    @apply block font-display text-lg font-semibold tabular-nums tracking-tight text-white;
+    transition: color 0.25s ease, transform 0.35s var(--ease-out);
+  }
+  .footer-phone:hover .footer-phone__num {
+    @apply text-primary;
+    transform: translate3d(4px, 0, 0);
+  }
+  .footer-phone__label {
+    @apply mt-0.5 flex items-center gap-1.5 text-sm text-white/60;
+  }
+  .footer-link {
+    @apply relative inline-block text-white/85;
+    transition: color 0.25s ease, transform 0.35s var(--ease-out);
+  }
+  .footer-link:hover {
+    @apply text-primary;
+    transform: translate3d(4px, 0, 0);
+  }
+  .footer-top {
+    @apply inline-flex items-center gap-2 self-start rounded-full border border-white/15 px-4 py-2 font-medium text-white/80;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .footer-top:hover {
+    @apply border-primary text-primary;
+  }
+  .footer-top svg {
+    transition: transform 0.35s var(--ease-out);
+  }
+  .footer-top:hover svg {
+    transform: translate3d(0, -3px, 0);
+  }
+
   /* Mobile CTA bar ----------------------------------------------- */
   .cta-bar {
     transform: translate3d(0, 160%, 0);
@@ -247,11 +386,11 @@
 
 /* Page load: staggered hero entrance (delay set per element via --d) */
 .hero-in {
-  animation: heroIn 1s var(--ease-out) both;
+  animation: heroIn 0.9s var(--ease-out) both;
   animation-delay: var(--d, 0ms);
 }
 .hero-media {
-  animation: heroMedia 1.3s var(--ease-out) both;
+  animation: heroMedia 1.1s var(--ease-out) both;
   animation-delay: var(--d, 0ms);
 }
 .hero-badge {
@@ -289,6 +428,15 @@
     transform: none;
   }
 }
+
+@keyframes ring {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(-14deg); }
+  30% { transform: rotate(12deg); }
+  45% { transform: rotate(-9deg); }
+  60% { transform: rotate(6deg); }
+  75% { transform: rotate(-3deg); }
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -299,17 +447,45 @@
    disappears if the script fails to load. Stagger via --i. */
 .js [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 32px, 0);
-  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
-  transition-delay: calc(var(--i, 0) * 90ms);
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
 }
 .js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
 }
 
-/* Parallax layers are moved by JS with translate3d only */
-[data-parallax] {
+/* Skip layout and paint of below-the-fold sections until they get close
+   to the viewport. Intrinsic sizes are the measured section heights per
+   breakpoint so the scrollbar stays stable; "auto" then remembers the real
+   size. main.js renders them in full before any in-page link scrolls. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--defer-h, 1000px);
+}
+#how.defer-render {
+  --defer-h: 2380px;
+}
+#faq.defer-render {
+  --defer-h: 790px;
+}
+@media (min-width: 768px) {
+  #how.defer-render {
+    --defer-h: 1970px;
+  }
+}
+@media (min-width: 1024px) {
+  #how.defer-render {
+    --defer-h: 1330px;
+  }
+}
+.defer-render.is-rendered {
+  content-visibility: visible;
+}
+
+/* Parallax layers are moved by JS with translate3d only (desktop) */
+.parallax-on [data-parallax] {
   will-change: transform;
 }
 
